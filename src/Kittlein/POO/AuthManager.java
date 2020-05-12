@@ -7,6 +7,7 @@ import com.wrapper.spotify.model_objects.credentials.ClientCredentials;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
 import com.wrapper.spotify.requests.authorization.client_credentials.ClientCredentialsRequest;
+import org.apache.hc.core5.http.ParseException;
 
 import java.awt.*;
 import java.io.IOException;
@@ -26,13 +27,21 @@ public class AuthManager {
     public AuthManager(SpotifyApi spotifyApi) {
         this.spotifyApi = spotifyApi;
         clientCredentialsRequest = spotifyApi.clientCredentials().build();
-        authorizationCodeRequest = spotifyApi.authorizationCode(code).build();
+
         authorizationCodeUriRequest = spotifyApi.authorizationCodeUri().scope("playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public").build();
         try {
             authorizationCodeCredentials= authorizationCodeRequest.execute();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (SpotifyWebApiException e) {
+        } catch (SpotifyWebApiException |ParseException e) {
+            e.printStackTrace();
+        }
+        authorizationCodeRequest = spotifyApi.authorizationCode(code).build();
+        try {
+            authorizationCodeRequest.execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SpotifyWebApiException|ParseException e) {
             e.printStackTrace();
         }
     }
@@ -76,7 +85,7 @@ public class AuthManager {
             spotifyApi.setAccessToken(clientCredentials.getAccessToken());
 
             System.out.println("Expires in: " + clientCredentials.getExpiresIn());
-        } catch (IOException | SpotifyWebApiException e) {
+        } catch (IOException | SpotifyWebApiException |ParseException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
