@@ -30,8 +30,17 @@ public class AuthWrapper {
         this.spotifyApi = spotifyApi;
         clientCredentialsRequest = spotifyApi.clientCredentials().build();
         authorizationCodeUriRequest = spotifyApi.authorizationCodeUri().scope("playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public").build();
+        clientCredentials_Sync();//
     }
 
+    public void LogIn(){
+        try {
+            authorizationCodeUri_Authorize();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        authorizationCode();
+    }
 
     private String readAuthCode() throws IOException {
         String code="";
@@ -50,7 +59,7 @@ public class AuthWrapper {
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 String URL=in.readLine();
                 in.close();
-                code= (URL.substring(11,URL.length()-9));//Elimina formateo de la url y el httpRequest
+                code= (URL.substring(11,URL.length()-9));//Elimina formateo de la url y el sufijo de httpRequest
             }
         }
         server.close();
@@ -67,11 +76,12 @@ public class AuthWrapper {
         }
         code= readAuthCode();
         System.out.println("Solicitamos el Codigo de autorizacion para la cuenta a spotify");
+        //authorizationCodeCredentials = spotifyApi.
         authorizationCodeRequest = spotifyApi.authorizationCode(code).build();
-        authorizationCodeRefreshRequest = spotifyApi.authorizationCodeRefresh().build();
+        //authorizationCodeRefreshRequest = spotifyApi.authorizationCodeRefresh().build();
     }
 
-    public void clientCredentials_Sync() {
+    private void clientCredentials_Sync() {
         try {
             final ClientCredentials clientCredentials = clientCredentialsRequest.execute();
 
@@ -84,9 +94,9 @@ public class AuthWrapper {
         }
     }
 
-    public void authorizationCodeRefresh_Sync() {
+    public void authorizationCodeRefresh() {
         try {
-            final AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeRefreshRequest.execute();
+            authorizationCodeCredentials = authorizationCodeRefreshRequest.execute();
             // Set access and refresh token for further "spotifyApi" object usage
             spotifyApi.setAccessToken(authorizationCodeCredentials.getAccessToken());
             spotifyApi.setRefreshToken(authorizationCodeCredentials.getRefreshToken());
@@ -96,13 +106,15 @@ public class AuthWrapper {
         }
     }
 
-    public void authorizationCode_Sync() {
+    public void authorizationCode() {
         try {
-            final AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeRequest.execute();
+            authorizationCodeCredentials = authorizationCodeRequest.execute();
             // Set access and refresh token for further "spotifyApi" object usage
             spotifyApi.setAccessToken(authorizationCodeCredentials.getAccessToken());
             spotifyApi.setRefreshToken(authorizationCodeCredentials.getRefreshToken());
             System.out.println("Codigo Pedido con éxito, expira en: " + authorizationCodeCredentials.getExpiresIn()+"s");
+            System.out.println("Refresh Token: "+spotifyApi.getRefreshToken());
+            authorizationCodeRefreshRequest = spotifyApi.authorizationCodeRefresh().build();
         } catch (IOException | SpotifyWebApiException e) {
             System.out.println("Error en authorizationCode_Sync: " + e.getMessage());
         }

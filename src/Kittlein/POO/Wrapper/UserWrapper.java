@@ -7,11 +7,11 @@ import com.wrapper.spotify.requests.data.users_profile.GetCurrentUsersProfileReq
 
 import java.io.IOException;
 
-public class UsersWrapper {
+public class UserWrapper {
     private SpotifyApi spotifyApi;
     private User user;
 
-    public UsersWrapper(SpotifyApi spotifyApi){
+    public UserWrapper(SpotifyApi spotifyApi){
         this.spotifyApi=spotifyApi;
         GetCurrentUsersProfileRequest getCurrentUsersProfileRequest = spotifyApi.getCurrentUsersProfile()
                 .build();
@@ -23,5 +23,9 @@ public class UsersWrapper {
         } catch (SpotifyWebApiException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getName(){
+        return  user.getDisplayName();
     }
 }
