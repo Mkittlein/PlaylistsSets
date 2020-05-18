@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="300.0" prefWidth="400.0" stylesheets="@Login.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kittlein.POO.Controller">
+
+   <children>
+      <VBox fx:id="LogScreen" fillWidth="true" prefHeight="300.0" prefWidth="400.0" spacing="0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TextArea fx:id="LogText" editable="false" prefHeight="250.0" prefWidth="400.0" text="Por favor inicie sesion en spotify para continuar" wrapText="true" />
+            <Button id="LogIn" fx:id="LogIn" defaultButton="true" mnemonicParsing="false" onAction="#LogIn" prefHeight="50.0" prefWidth="400.0" text="Iniciar Sesion" textAlignment="CENTER">
+               <graphic>
+                  <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mouseTransparent="true">
+                     <children>
+                        <Pane HBox.hgrow="NEVER" />
+                        <ImageView fitHeight="50" preserveRatio="true">
+                           <image>
+                              <Image url="@SpotifyLogo.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+               </graphic>
+            </Button>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </VBox>
+   </children>
+</AnchorPane>

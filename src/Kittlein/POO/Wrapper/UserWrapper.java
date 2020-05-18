@@ -16,7 +16,7 @@ public class UserWrapper {
         GetCurrentUsersProfileRequest getCurrentUsersProfileRequest = spotifyApi.getCurrentUsersProfile()
                 .build();
         try {
-            User user = getCurrentUsersProfileRequest.execute();
+            user = getCurrentUsersProfileRequest.execute();
             System.out.println("Logueado como: "+user.getDisplayName());
         } catch (IOException e) {
             e.printStackTrace();

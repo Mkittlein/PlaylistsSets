@@ -1,0 +1,119 @@
+.root {
+    /* Swatch Colors - Green*/
+    -swatch-100: #b9fbcc;
+    -swatch-200: #88f9aa;
+    -swatch-300: #61d675;
+    -swatch-400: #44d660;
+    -swatch-500: #1DB954;
+
+    /*default text */
+    -fx-text-base-color: rgb(200, 200, 200);
+    -fx-text-button-normal: -swatch-500;
+    -fx-text-button-colored: rgb(0, 0, 0);
+    -fx-text-button-text: rgb(100, 100, 100);
+    -fx-text-title-color: rgb(200, 200, 200);
+    -fx-text-subtitle-color: rgb(165, 165, 165);
+    -fx-text-control-title-color: rgb(130, 130, 130);
+    -fx-text-fill: -fx-text-base-color;
+    -dark: rgb(47, 52, 57);
+    -fx-background-color: -dark;
+    /*default font */
+    -fx-font-family: 'Roboto Medium';
+    -fx-font-size: 14px;
+    -fx-disabled-opacity: 0.6;
+    /*default colors */
+    -swatch-grey: rgb(200, 200, 200);
+    -swatch-dark-grey: rgb(150, 150, 150);
+    -swatch-light-grey: rgb(230, 230, 230);
+    -swatch-toolbar: rgb(245, 245, 245);
+    -swatch-toolbar-selected: rgb(215, 215, 215);
+    /*
+     Modena colors
+     */
+    -fx-dark-text-color: rgb(60,60,60); /* Text color when selected*/
+    -fx-mid-text-color: -fx-text-base-color;
+    -fx-light-text-color: -swatch-light-grey;
+    -fx-body-color: #3C3C3C;
+    /* A bright blue for the focus indicator of objects. Typically used as the
+     * first color in -fx-background-color for the "focused" pseudo-class. Also
+     * typically used with insets of -1.4 to provide a glowing effect.
+     */
+    -fx-focus-color: -swatch-400;
+    -fx-faint-focus-color: -swatch-200;
+    /* A bright blue for highlighting/accenting objects.  For example: selected
+     * text; selected items in menus, lists, trees, and tables; progress bars */
+    -fx-accent: -swatch-400;
+    -fx-dark-text-color: rgb(60,60,60);
+}
+
+.button-raised {
+    -fx-effect: dropshadow(gaussian, rgb(0.0, 0.0, 0.0, 0.30), 6.0, 0.3, 0,
+    1);
+//-fx-background-color: rgb(60, 60, 60);
+}
+
+.button-flat {
+    -fx-effect: null;
+    -fx-background-color: transparent;
+}
+
+.toggle-button, .button {
+    -fx-text-fill: -fx-text-button-normal;
+    -fx-font-family: 'Roboto';
+    -fx-font-weight: bold;
+    -fx-background-insets: 0.0;
+    -fx-background-radius: 4.0;
+    -fx-padding: 0.7em;
+    -fx-alignment: CENTER;
+}
+
+.button-raised .button .text, .button-flat .button .text {
+    -fx-text-weight: Bold;
+}
+
+.button:default {
+    -fx-background-color: -swatch-500;
+    -fx-text-fill: -fx-text-button-colored;
+}
+
+.toggle-button:focused, .button:focused, .button:default:focused {
+    -fx-background-color: -swatch-light-grey;
+}
+
+.toggle-button:focused:selected {
+    -fx-background-color: derive(-swatch-500, 50.0%),
+    derive(-swatch-500, -20.0%);
+    -fx-background-insets: 0.0, 0.2em;
+    -fx-text-fill: -fx-text-button-colored;
+}
+
+.toggle-button:armed, .toggle-button:selected, .button:armed, .button:default:armed
+{
+    -fx-background-color: -swatch-grey;
+    -fx-text-fill: -fx-text-button-colored;
+}
+
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-pref-height: 42;
+    -fx-pref-width: 42;
+    -fx-min-height: 42;
+    -fx-min-width: 42;
+    -fx-padding: 0;
+}
+
+.icon-button .text {
+    -fx-font-family: 'MaterialDesignIconicFont';
+    -fx-font-size: 24px;
+}
+
+.text-area{
+
+    -fx-font-family: "Roboto Light";
+    -fx-font:  36px  "bold";
+    -fx-text-fill: rgb(230,230,230);
+}
+
+.text-area .content {
+    -fx-background-color: rgb(60,60,60) ;
+}

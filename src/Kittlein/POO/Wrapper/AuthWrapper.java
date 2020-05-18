@@ -13,6 +13,7 @@ import java.awt.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.net.URI;
 
 
@@ -46,8 +47,8 @@ public class AuthWrapper {
         String code="";
         boolean wait=true;
         ServerSocket server = new ServerSocket(8888);
+        server.setSoTimeout(30000);
         System.out.println("Listening for connection on port 8888 ....");
-        while (wait) {
             try (Socket socket = server.accept()) {
                 wait=false;
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
@@ -60,8 +61,10 @@ public class AuthWrapper {
                 String URL=in.readLine();
                 in.close();
                 code= (URL.substring(11,URL.length()-9));//Elimina formateo de la url y el sufijo de httpRequest
+            } catch (SocketTimeoutException e){
+                e.printStackTrace();
             }
-        }
+
         server.close();
         System.out.println("Succes! codigo="+code);
         return code;

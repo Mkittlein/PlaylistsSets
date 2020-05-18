@@ -33,52 +33,53 @@
  *                                                                             *
  ******************************************************************************/
 .root {
-    /* Swatch Colors - Blue*/
-    -swatch-100: #b9fbcc;
-    -swatch-200: #88f9aa;
-    -swatch-300: #61d675;
-    -swatch-400: #44d660;
-    -swatch-500: #1DB954;
+     /* Swatch Colors - Green*/
+     -swatch-100: #b9fbcc;
+     -swatch-200: #88f9aa;
+     -swatch-300: #61d675;
+     -swatch-400: #44d660;
+     -swatch-500: #1DB954;
 
-    /*default text */
-    -fx-text-base-color: rgb(200, 200, 200);
-    -fx-text-button-normal: -swatch-500;
-    -fx-text-button-colored: rgb(0, 0, 0);
-    -fx-text-button-text: rgb(100, 100, 100);
-    -fx-text-title-color: rgb(200, 200, 200);
-    -fx-text-subtitle-color: rgb(165, 165, 165);
-    -fx-text-control-title-color: rgb(130, 130, 130);
-    -fx-text-fill: -fx-text-base-color;
-    -dark: rgb(47, 52, 57);
-    -fx-background-color: -dark;
-    /*default font */
-    -fx-font-family: 'Roboto Medium';
-    -fx-font-size: 14px;
-    -fx-disabled-opacity: 0.6;
-    /*default colors */
-    -swatch-grey: rgb(200, 200, 200);
-    -swatch-dark-grey: rgb(150, 150, 150);
-    -swatch-light-grey: rgb(230, 230, 230);
-    -swatch-toolbar: rgb(245, 245, 245);
-    -swatch-toolbar-selected: rgb(215, 215, 215);
-    /*
-     Modena colors
-     */
-    -fx-dark-text-color: rgb(60,60,60); /* Text color when selected*/
-    -fx-mid-text-color: -fx-text-base-color;
-    -fx-light-text-color: -swatch-light-grey;
-    -fx-body-color: #3C3C3C;
-    /* A bright blue for the focus indicator of objects. Typically used as the
-     * first color in -fx-background-color for the "focused" pseudo-class. Also
-     * typically used with insets of -1.4 to provide a glowing effect.
-     */
-    -fx-focus-color: -swatch-400;
-    -fx-faint-focus-color: -swatch-200;
-    /* A bright blue for highlighting/accenting objects.  For example: selected
-     * text; selected items in menus, lists, trees, and tables; progress bars */
-    -fx-accent: -swatch-400;
-    -fx-dark-text-color: rgb(60,60,60);
-}
+     /*default text */
+     -fx-text-base-color: rgb(200, 200, 200);
+     -fx-text-button-normal: -swatch-500;
+     -fx-text-button-colored: rgb(0, 0, 0);
+     -fx-text-button-text: rgb(100, 100, 100);
+     -fx-text-title-color: rgb(200, 200, 200);
+     -fx-text-subtitle-color: rgb(165, 165, 165);
+     -fx-text-control-title-color: rgb(130, 130, 130);
+     -fx-text-fill: -fx-text-base-color;
+     -dark: rgb(47, 52, 57);
+     -fx-background-color: -dark;
+     /*default font */
+     -fx-font-family: 'Roboto Medium';
+     -fx-font-size: 14px;
+     -fx-disabled-opacity: 0.6;
+     /*default colors */
+     -swatch-grey: rgb(200, 200, 200);
+     -swatch-dark-grey: rgb(150, 150, 150);
+     -swatch-light-grey: rgb(230, 230, 230);
+     -swatch-toolbar: rgb(245, 245, 245);
+     -swatch-toolbar-selected: rgb(215, 215, 215);
+     /*
+      Modena colors
+      */
+     -fx-dark-text-color: rgb(60,60,60); /* Text color when selected*/
+     -fx-mid-text-color: -fx-text-base-color;
+     -fx-light-text-color: -swatch-light-grey;
+     -fx-body-color: #3C3C3C;
+     /* A bright blue for the focus indicator of objects. Typically used as the
+      * first color in -fx-background-color for the "focused" pseudo-class. Also
+      * typically used with insets of -1.4 to provide a glowing effect.
+      */
+     -fx-focus-color: -swatch-400;
+     -fx-faint-focus-color: -swatch-200;
+     /* A bright blue for highlighting/accenting objects.  For example: selected
+      * text; selected items in menus, lists, trees, and tables; progress bars */
+     -fx-accent: -swatch-400;
+     -fx-dark-text-color: rgb(60,60,60);
+ }
+
 
 /*******************************************************************************
  *                                                                             *
@@ -800,3 +801,4 @@
 .toolbar-colored .text {
     -fx-fill: rgb(60,60,60);
 }
+
