@@ -1,4 +1,4 @@
-package Kittlein.POO.Wrapper;
+package Kittlein.Wrapper;
 
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;

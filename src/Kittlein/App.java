@@ -1,14 +1,12 @@
-package Kittlein.POO;
-
-
+package Kittlein;
 
 
 import java.io.IOException;
 import java.net.URI;
 
-import Kittlein.POO.Wrapper.AuthWrapper;
-import Kittlein.POO.Wrapper.PlaylistsWrapper;
-import Kittlein.POO.Wrapper.UserWrapper;
+import Kittlein.Wrapper.AuthWrapper;
+import Kittlein.Wrapper.PlaylistsWrapper;
+import Kittlein.Wrapper.UserWrapper;
 import com.wrapper.spotify.*;
 
 
@@ -18,9 +16,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
 
 
 public class App extends Application {
@@ -32,38 +27,44 @@ public class App extends Application {
     private AuthWrapper authWrapper;
     private PlaylistsWrapper playlistsWrapper;
     private UserWrapper userWrapper;
+    private Controller controller;
 
-    public void iniciar() throws IOException {
+
+
+    public void iniciar(Controller controller) throws IOException {
         spotifyApi = new SpotifyApi.Builder()
             .setClientId(clientID)
             .setClientSecret(clientSecret)
             .setRedirectUri(redirectURI)
             .build();
+        this.controller=controller;
         authWrapper = new AuthWrapper(spotifyApi);
         authWrapper.LogIn();//Abre una ventana en el navegador por defecto del sistema y e intenta autorizarse con Spotify
         playlistsWrapper = new PlaylistsWrapper(spotifyApi);
         userWrapper = new UserWrapper(spotifyApi);
+        controller.setPlaylistsWrapper(playlistsWrapper);
+        controller.setUserWrapper(userWrapper);
         stage.close();
         this.stage=new Stage();
         stage.setTitle("Playlists Sets - "+userWrapper.getName());
-        Parent root = FXMLLoader.load(getClass().getResource("App.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("GUI/App.fxml"));
         stage.setScene(new Scene(root, 800, 600));
-
+        stage.getIcons().add(new Image(App.class.getResourceAsStream("GUI/Logo.png")));
         stage.show();
-
     }
 
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.stage=primaryStage;
-        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("GUI/Login.fxml"));
         primaryStage.setTitle("PlaylistSets - Login");
         primaryStage.setScene(new Scene(root, 400, 300));
         primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new Image(App.class.getResourceAsStream("Logo.png")));
+        primaryStage.getIcons().add(new Image(App.class.getResourceAsStream("GUI/Logo.png")));
         primaryStage.show();
     }
+
 
 
     public static void main(String[] args) {
