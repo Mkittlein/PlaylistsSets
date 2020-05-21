@@ -28,4 +28,8 @@ public class UserWrapper {
     public String getName(){
         return  user.getDisplayName();
     }
+
+    public void getPlaylists(){
+
+    }
 }

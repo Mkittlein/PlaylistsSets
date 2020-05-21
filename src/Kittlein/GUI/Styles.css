@@ -441,6 +441,15 @@
  * List, Tree, Table COMMON                                                    *
  *                                                                             *
  ******************************************************************************/
+.list-view .list-cell:even {
+    -fx-background-color: rgb(60,60,60);
+
+}
+.list-view .list-cell:odd {
+    -fx-background-color: rgb(80,80,80);
+
+}
+
 .list-view:focused .list-cell:filled:focused:selected {
     -fx-background-color: -swatch-light-grey;
     -fx-text-fill: -swatch-500;
@@ -448,7 +457,7 @@
 
 .list-view:hover .list-cell:hover {
     -fx-background-color: -swatch-light-grey;
-    -fx-text-fill: -fx-text-base-color;
+    -fx-text-fill: black;
 }
 
 .list-cell {

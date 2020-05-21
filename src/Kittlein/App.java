@@ -45,9 +45,18 @@ public class App extends Application {
         controller.setPlaylistsWrapper(playlistsWrapper);
         controller.setUserWrapper(userWrapper);
         stage.close();
+
+
+
+        FXMLLoader appLoader = new FXMLLoader(
+                getClass().getResource(
+                        "GUI/App.fxml"
+                )
+        );
+        appLoader.setController(controller);
         this.stage=new Stage();
         stage.setTitle("Playlists Sets - "+userWrapper.getName());
-        Parent root = FXMLLoader.load(getClass().getResource("GUI/App.fxml"));
+        Parent root = appLoader.load();//FXMLLoader.load(getClass().getResource("GUI/App.fxml"));
         stage.setScene(new Scene(root, 800, 600));
         stage.getIcons().add(new Image(App.class.getResourceAsStream("GUI/Logo.png")));
         stage.show();
