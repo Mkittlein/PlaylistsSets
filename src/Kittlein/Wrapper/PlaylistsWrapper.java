@@ -4,11 +4,14 @@ import Kittlein.Sets.Playlist;
 import Kittlein.Sets.PlaylistSimple;
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
+import com.wrapper.spotify.model_objects.specification.Image;
 import com.wrapper.spotify.model_objects.specification.Paging;
 import com.wrapper.spotify.model_objects.specification.PlaylistSimplified;
 import com.wrapper.spotify.requests.data.playlists.GetListOfCurrentUsersPlaylistsRequest;
+import com.wrapper.spotify.requests.data.playlists.GetPlaylistCoverImageRequest;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +29,7 @@ public class PlaylistsWrapper {
             int offset=0;
             while (total>=0) {
                 for (PlaylistSimplified p : playlistSimplifiedPaging.getItems()) {
-                    PL.add(new PlaylistSimple(p.getId(), p.getName(), p.getTracks().getTotal()));
+                    PL.add(new PlaylistSimple(p.getId(), p.getName(), p.getTracks().getTotal(),p.getUri(),this));
                 }
                 offset+=50;
                 total-=50;
@@ -47,6 +50,18 @@ public class PlaylistsWrapper {
         return PL;
     }
 
+    public Image getImage(String id){
+        GetPlaylistCoverImageRequest getPlaylistCoverImageRequest = spotifyApi
+                .getPlaylistCoverImage(id)
+                .build();
+        try {
+            Image[] images = getPlaylistCoverImageRequest.execute();
+            return images[0];
+        } catch (IOException | SpotifyWebApiException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return null;
+    }
 
     public PlaylistsWrapper(SpotifyApi spotifyApi){
 

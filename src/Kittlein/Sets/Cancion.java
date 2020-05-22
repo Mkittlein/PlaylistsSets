@@ -7,6 +7,7 @@ public class Cancion {
     private String artistname;
     private String artistid;
 
+
     @Override
     public boolean equals(Object o) {
         return id.equals(((Cancion) o).getId());

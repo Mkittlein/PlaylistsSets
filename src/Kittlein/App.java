@@ -46,8 +46,6 @@ public class App extends Application {
         controller.setUserWrapper(userWrapper);
         stage.close();
 
-
-
         FXMLLoader appLoader = new FXMLLoader(
                 getClass().getResource(
                         "GUI/App.fxml"
