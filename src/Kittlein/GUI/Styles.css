@@ -156,7 +156,7 @@
 }
 
 .button:default {
-    -fx-background-color: -swatch-500;
+    -fx-background-color: -swatch-300;
     -fx-text-fill: -fx-text-button-colored;
 }
 

@@ -5,27 +5,24 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 
 
-import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
-import javax.swing.text.Element;
-import javax.swing.text.html.ImageView;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PlaylistSimple extends Playlist {
+    private String id;
+    private String name;
     private int size;
     private String url;
     private Image image;
+    private boolean cached;
+    private Set<Cancion> canciones = new HashSet<Cancion>();
 
-    public PlaylistSimple(String id, String name){
-        this.id=id;
-        this.name=name;
-        this.cached=false;
-    }
+
 
     public PlaylistSimple(String id, String name, int size, String url, PlaylistsWrapper playlistsWrapper){
         this.id=id;
@@ -36,12 +33,12 @@ public class PlaylistSimple extends Playlist {
         this.playlistsWrapper = playlistsWrapper;
     }
 
-    private void requestContent(){
-
+    private void actualizarContenido(){
         URL url = null;
         try {
             url = new URL(playlistsWrapper.getImage(id).getUrl());
         image = SwingFXUtils.toFXImage(ImageIO.read(url),null);
+        canciones.addAll(playlistsWrapper.getCanciones(id,size));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,20 +46,28 @@ public class PlaylistSimple extends Playlist {
 
     public javafx.scene.image.Image getImage() {
         if (!cached){
-            requestContent();
+            actualizarContenido();
             cached=true;
         }
         return image;
     }
 
-    public List<Cancion> getTracks() {
+    public Set<Cancion> getCanciones() {
         if (cached)
-            return tracks;
+            return canciones;
         else{
-            requestContent();
+            actualizarContenido();
             cached=true;
         }
-        return tracks;
+        return canciones;
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public int getSize() {

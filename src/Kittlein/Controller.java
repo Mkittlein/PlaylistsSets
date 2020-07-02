@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 
 
 import java.awt.*;
+import java.awt.ScrollPane;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -28,12 +29,15 @@ public class Controller {
     public ImageView PlaylistImage;
     private App app;
     public Button LogIn;
+    public VBox Contenido;
     public TextArea LogText;
     public VBox LogScreen;
     public Label PlaylistName;
+    public ListView PlaylistTracks;
     private UserWrapper userWrapper;
     private PlaylistsWrapper playlistsWrapper;
-    List<Playlist> playlists;
+    private List<Playlist> playlists;
+
 
     public Controller() {
     }
@@ -51,12 +55,14 @@ public class Controller {
             }
         });
         PlaylistImage.setImage(p.getImage());
+        PlaylistTracks.getItems().clear();
+        PlaylistTracks.getItems().addAll(p.getCanciones());
+        PlaylistTracks.refresh();
     }
 
     public void LogIn(ActionEvent actionEvent) {
         LogScreen.getChildren().remove(LogText);
         LogScreen.getChildren().remove(LogIn);
-        ProgressIndicator P =new ProgressIndicator();
         LogScreen.getChildren().add(new ProgressIndicator() );
         LogScreen.fillWidthProperty().setValue(true);
         LogScreen.setAlignment(Pos.CENTER);
@@ -66,6 +72,7 @@ public class Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         playlists = playlistsWrapper.getListOfCurrentUsersPlaylists();
         updateUi();
     }

@@ -31,13 +31,13 @@ public class App extends Application {
 
 
 
-    public void iniciar(Controller controller) throws IOException {
+    public void iniciar(Controller main_controller) throws IOException {
         spotifyApi = new SpotifyApi.Builder()
             .setClientId(clientID)
             .setClientSecret(clientSecret)
             .setRedirectUri(redirectURI)
             .build();
-        this.controller=controller;
+        this.controller=main_controller;
         authWrapper = new AuthWrapper(spotifyApi);
         authWrapper.LogIn();//Abre una ventana en el navegador por defecto del sistema y e intenta autorizarse con Spotify
         playlistsWrapper = new PlaylistsWrapper(spotifyApi);
@@ -45,7 +45,6 @@ public class App extends Application {
         controller.setPlaylistsWrapper(playlistsWrapper);
         controller.setUserWrapper(userWrapper);
         stage.close();
-
         FXMLLoader appLoader = new FXMLLoader(
                 getClass().getResource(
                         "GUI/App.fxml"
@@ -53,11 +52,13 @@ public class App extends Application {
         );
         appLoader.setController(controller);
         this.stage=new Stage();
-        stage.setTitle("Playlists Sets - "+userWrapper.getName());
-        Parent root = appLoader.load();//FXMLLoader.load(getClass().getResource("GUI/App.fxml"));
-        stage.setScene(new Scene(root, 800, 600));
         stage.getIcons().add(new Image(App.class.getResourceAsStream("GUI/Logo.png")));
         stage.show();
+        stage.setTitle("Playlists Sets - "+userWrapper.getName());
+        Parent root = appLoader.load();
+
+        stage.setScene(new Scene(root, 800, 600));
+
     }
 
 

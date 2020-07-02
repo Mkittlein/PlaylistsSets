@@ -55,7 +55,7 @@ public class AuthWrapper {
                 out.writeBytes("HTTP/1.1 200 OK\r\n");
                 out.writeBytes("Content-Type: text/html\r\n\r\n");
                 out.writeBytes("<html><head></head><body><h1>Ya puede Cerrar la pagina</h1>\n" +
-                        "<script>window.close();</script>" +//ESTO NO FUNCIONA EN FIREFOX POR MEDIDAS DE SEGURIDAD
+                        "<script>window.close();</script>" +//Cerrar la ventana automaticamente, aveces no funciona por motivos de seguridad del navegador
                         "</body></html>");
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 String URL=in.readLine();
