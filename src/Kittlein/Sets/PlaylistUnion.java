@@ -1,5 +1,7 @@
 package Kittlein.Sets;
 
+import Kittlein.Wrapper.PlaylistsWrapper;
+
 import java.util.Set;
 
 public class PlaylistUnion extends Playlist{
@@ -11,6 +13,16 @@ public class PlaylistUnion extends Playlist{
         playlist1=p1;
         playlist2=p2;
     }
+
+    public PlaylistUnion(Playlist p1){
+        playlist1=p1;
+        playlist2=new PlaylistSimple("","",0,"",null);
+    }
+
+    public void add(Playlist p2){
+        this.playlist2=p2;
+    }
+
 
     public Set<Cancion> getCanciones(){
         Set<Cancion> aux = playlist1.getCanciones();
@@ -25,7 +37,9 @@ public class PlaylistUnion extends Playlist{
         return aux.size();
     }
 
+
+
     public String getName(){
-        return playlist1.getName()+" U "+playlist2.getName();
+        return playlist1.getName()+" ∪ "+playlist2.getName();
     }
 }

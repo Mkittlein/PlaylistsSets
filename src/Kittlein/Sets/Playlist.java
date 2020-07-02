@@ -14,7 +14,7 @@ protected PlaylistsWrapper playlistsWrapper;
 
 
 
-
+    public String toString(){return getName();}
 
     public abstract Set<Cancion> getCanciones();
 

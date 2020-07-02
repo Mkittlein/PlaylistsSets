@@ -130,17 +130,6 @@
  * Button & ToggleButton                                                       *
  *                                                                             *
  ******************************************************************************/
-.button-raised {
-    -fx-effect: dropshadow(gaussian, rgb(0.0, 0.0, 0.0, 0.30), 6.0, 0.3, 0,
-    1);
-//-fx-background-color: rgb(60, 60, 60);
-}
-
-.button-flat {
-    -fx-effect: null;
-    -fx-background-color: transparent;
-}
-
 .toggle-button, .button {
     -fx-text-fill: -fx-text-button-normal;
     -fx-font-family: 'Roboto';
@@ -156,7 +145,7 @@
 }
 
 .button:default {
-    -fx-background-color: -swatch-300;
+    -fx-background-color: -swatch-500;
     -fx-text-fill: -fx-text-button-colored;
 }
 

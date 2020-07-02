@@ -12,6 +12,16 @@ public class PlaylistDiferencia extends Playlist {
         playlist2=p2;
     }
 
+    public PlaylistDiferencia(Playlist p1){
+        this.playlist1=p1;
+        playlist2=new PlaylistSimple("","",0,"",null);
+    }
+
+    public void add(Playlist p2){
+        this.playlist2=p2;
+    }
+
+
     public Set<Cancion> getCanciones(){
         Set<Cancion> aux1= playlist1.getCanciones();
         Set<Cancion> aux2= playlist2.getCanciones();
