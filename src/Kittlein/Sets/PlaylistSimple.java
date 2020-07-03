@@ -52,6 +52,8 @@ public class PlaylistSimple implements Playlist {
         return image;
     }
 
+    public String toString(){return this.getName();}
+
     public Set<Cancion> getCanciones() {
         if (cached)
             return canciones;
@@ -60,6 +62,17 @@ public class PlaylistSimple implements Playlist {
             cached=true;
         }
         return canciones;
+    }
+
+    public void add(Playlist p){
+        this.id=((PlaylistSimple)p).id;
+        this.name=((PlaylistSimple)p).name;
+        this.size=((PlaylistSimple)p).size;
+        this.url=((PlaylistSimple)p).url;
+        this.image=((PlaylistSimple)p).image;
+        this.cached=((PlaylistSimple)p).cached;
+        this.canciones=((PlaylistSimple)p).canciones;
+        this.playlistsWrapper=((PlaylistSimple)p).playlistsWrapper;
     }
 
     public String getName(){

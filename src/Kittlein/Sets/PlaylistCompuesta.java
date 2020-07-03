@@ -7,4 +7,6 @@ public abstract class PlaylistCompuesta implements Playlist {
     public void add(Playlist p2){
         this.playlist2=p2;
     }
+
+    public String toString(){return this.getName();}
 }

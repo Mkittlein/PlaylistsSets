@@ -5,7 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600" prefWidth="900" style="-fx-background-color: #3c3c3c;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane fx:id="" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600" prefWidth="900" style="-fx-background-color: #3c3c3c;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
     <children>
       <HBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -46,7 +46,7 @@
                               <Label fx:id="PlaylistName" GridPane.columnIndex="1" />
                               <Label fx:id="PlaylistSize" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <Hyperlink fx:id="PlaylistLink" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Button fx:id="buttonAdd" alignment="CENTER" defaultButton="true" mnemonicParsing="false" onMouseClicked="#addPlaylist" text="Add -&gt;" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                              <Button fx:id="buttonAdd" alignment="CENTER" defaultButton="true" mnemonicParsing="false" onMouseClicked="#addPlaylistSimple" text="Add" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
                            </children>
                         </GridPane>
                         <ListView fx:id="PlaylistTracks" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
@@ -59,35 +59,44 @@
             </ScrollPane>
             <ScrollPane fitToHeight="true" fitToWidth="true" HBox.hgrow="ALWAYS">
                <content>
-                  <VBox alignment="CENTER" styleClass="card" HBox.hgrow="ALWAYS">
+                  <VBox alignment="TOP_CENTER" styleClass="card" HBox.hgrow="ALWAYS">
                      <children>
                         <Label alignment="CENTER" styleClass="card-title" text="Operaciones" />
-                        <TextField />
-                        <ListView fx:id="OpList" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
-                        <HBox alignment="BOTTOM_CENTER" styleClass="card" HBox.hgrow="ALWAYS" VBox.vgrow="NEVER">
+                        <HBox alignment="TOP_RIGHT">
                            <children>
-                            <Button fx:id="ButtonUnion" disable="true" accessibleHelp="Union" alignment="CENTER" defaultButton="true" mnemonicParsing="false" text="∪" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                              <TextField prefHeight="36.0" prefWidth="172.0" />
+                              <Button fx:id="buttonGuardarPlaylist" accessibleHelp="Guardar Playlist" alignment="TOP_RIGHT" contentDisplay="CENTER" defaultButton="true" disable="true" mnemonicParsing="false" onMouseClicked="#guardarPlaylist" text="Guardar" textAlignment="CENTER">
+                                 <tooltip>
+                                    <Tooltip text="Guardar Playlist" />
+                                 </tooltip>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <ListView fx:id="OpList" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+                        <ButtonBar buttonMinWidth="50.0" translateX="-10.0" translateY="5.0" HBox.hgrow="ALWAYS" VBox.vgrow="NEVER">
+                           <buttons>
+                            <Button fx:id="ButtonUnion" accessibleHelp="Union" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" disable="true" mnemonicParsing="false" onMouseClicked="#union" text="∪" textAlignment="CENTER">
                                 <tooltip>
                                     <Tooltip text="Union" />
                                 </tooltip>
                             </Button>
-                              <Button fx:id="ButtonInterseccion" disable="true" accessibleHelp="Intersección" alignment="CENTER" defaultButton="true" mnemonicParsing="false" text="∩" HBox.hgrow="ALWAYS">
+                              <Button fx:id="ButtonInterseccion" accessibleHelp="Intersección" alignment="CENTER" defaultButton="true" disable="true" mnemonicParsing="false" onMouseClicked="#interseccion" text="∩">
                                   <tooltip>
                                   <Tooltip text="Interseccion" />
                               </tooltip>
                               </Button>
-                              <Button fx:id="ButtonResta" disable="true" accessibleHelp="Resta" alignment="CENTER" defaultButton="true" mnemonicParsing="false" text="-" HBox.hgrow="ALWAYS">
+                              <Button fx:id="ButtonResta" accessibleHelp="Resta" alignment="CENTER" defaultButton="true" disable="true" mnemonicParsing="false" onMouseClicked="#resta" text="-">
                                   <tooltip>
                                       <Tooltip text="Resta" />
                                   </tooltip>
                               </Button>
-                              <Button fx:id="ButtonDiferencia" disable="true" accessibleHelp="Diferencia" alignment="CENTER" defaultButton="true" mnemonicParsing="false" text="△" HBox.hgrow="ALWAYS">
+                              <Button fx:id="ButtonDiferencia" accessibleHelp="Diferencia" alignment="CENTER" defaultButton="true" disable="true" mnemonicParsing="false" onMouseClicked="#diferencia" text="△">
                                   <tooltip>
                                       <Tooltip text="Diferencia" />
                                   </tooltip>
                               </Button>
-                           </children>
-                        </HBox>
+                           </buttons>
+                        </ButtonBar>
                      </children>
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

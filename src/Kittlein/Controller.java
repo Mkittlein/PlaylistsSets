@@ -1,7 +1,6 @@
 package Kittlein;
 
-import Kittlein.Sets.Playlist;
-import Kittlein.Sets.PlaylistSimple;
+import Kittlein.Sets.*;
 import Kittlein.Wrapper.PlaylistsWrapper;
 import Kittlein.Wrapper.UserWrapper;
 import javafx.collections.ObservableList;
@@ -25,14 +24,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
+
+    public Button buttonAdd;
     private App app;
     private UserWrapper userWrapper;
     private PlaylistsWrapper playlistsWrapper;
     private List<Playlist> playlists;
     private List<String> operaciones=new ArrayList<>();
+    private Playlist playlistOp=new PlaylistSimple(null,null,0,null,null);
 
 
     //Variables declaradas en el FXML
+    public VBox LogScreen;
+    public TextArea LogText;
+    public Button LogIn;
     public ListView PList;
     public Label PlaylistSize;
     public Hyperlink PlaylistLink;
@@ -41,13 +46,11 @@ public class Controller {
     public Button ButtonResta;
     public Button ButtonInterseccion;
     public Button ButtonUnion;
-    public Button LogIn;
     public VBox Contenido;
-    public TextArea LogText;
-    public VBox LogScreen;
     public Label PlaylistName;
     public ListView PlaylistTracks;
     public ListView OpList;
+    public Button buttonGuardarPlaylist;
 
 
     public Controller() {
@@ -109,15 +112,70 @@ public class Controller {
         this.playlistsWrapper = playlistsWrapper;
     }
 
-    public void addPlaylist(MouseEvent mouseEvent) {
+    public void addPlaylistSimple(MouseEvent mouseEvent) {
             PlaylistSimple p = (PlaylistSimple) PList.getSelectionModel().getSelectedItem();
-            operaciones.add(p.getName());
-            OpList.getItems().clear();
-            OpList.getItems().addAll(operaciones);
-            OpList.refresh();
-            ButtonUnion.setDisable(false);
-            ButtonInterseccion.setDisable(false);
-            ButtonResta.setDisable(false);
-            ButtonDiferencia.setDisable(false);
+            playlistOp.add(p);
+            addOperacion(p.getName());
+            enableOperations();
+    }
+
+    private void enableOperations(){
+        buttonAdd.setDisable(true);
+        ButtonUnion.setDisable(false);
+        ButtonInterseccion.setDisable(false);
+        ButtonResta.setDisable(false);
+        ButtonDiferencia.setDisable(false);
+        buttonGuardarPlaylist.setDisable(false);
+    }
+    private void disableOperations(){
+        buttonAdd.setDisable(false);
+        ButtonUnion.setDisable(true);
+        ButtonInterseccion.setDisable(true);
+        ButtonResta.setDisable(true);
+        ButtonDiferencia.setDisable(true);
+        buttonGuardarPlaylist.setDisable(true);
+    }
+
+    private void addOperacion(String op){
+        operaciones.add(op);
+        OpList.getItems().clear();
+        OpList.getItems().addAll(operaciones);
+        OpList.refresh();
+    }
+
+    public void diferencia(MouseEvent mouseEvent) {
+    disableOperations();
+    PlaylistDiferencia p= new PlaylistDiferencia(playlistOp);
+    playlistOp=p;
+    addOperacion("△");
+
+    }
+
+    public void resta(MouseEvent mouseEvent) {
+        disableOperations();
+        PlaylistResta p= new PlaylistResta(playlistOp);
+        playlistOp=p;
+        addOperacion("-");
+    }
+
+    public void interseccion(MouseEvent mouseEvent) {
+        disableOperations();
+        PlaylistInterseccion p= new PlaylistInterseccion(playlistOp);
+        playlistOp=p;
+        addOperacion("∩");
+    }
+
+    public void union(MouseEvent mouseEvent) {
+        disableOperations();
+        PlaylistUnion p= new PlaylistUnion(playlistOp);
+        playlistOp=p;
+        addOperacion("∪");
+    }
+
+    public void guardarPlaylist(MouseEvent mouseEvent) {
+        System.out.println("Guardada Playlist: "+playlistOp);
+        System.out.println("Tamaño: "+playlistOp.getSize());
+        System.out.println(playlistOp.getCanciones());
+        //disableOperations();
     }
 }
