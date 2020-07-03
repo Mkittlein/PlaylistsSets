@@ -2,11 +2,8 @@ package Kittlein.Sets;
 
 import java.util.Set;
 
-public class PlaylistInterseccion extends Playlist {
+public class PlaylistInterseccion extends PlaylistCompuesta {
 
-    private Playlist playlist1;
-
-    private Playlist playlist2;
 
     public PlaylistInterseccion(Playlist p1, Playlist p2){
         playlist1=p1;
@@ -22,10 +19,6 @@ public class PlaylistInterseccion extends Playlist {
         Set<Cancion> aux = playlist1.getCanciones();
         aux.retainAll(playlist2.getCanciones());
         return aux;
-    }
-
-    public void add(Playlist p2){
-        this.playlist2=p2;
     }
 
 

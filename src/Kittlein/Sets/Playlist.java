@@ -4,17 +4,10 @@ import Kittlein.Wrapper.PlaylistsWrapper;
 import java.util.List;
 import java.util.Set;
 
-public abstract class Playlist {
+public interface Playlist {
 
 
 
-
-protected PlaylistsWrapper playlistsWrapper;
-
-
-
-
-    public String toString(){return getName();}
 
     public abstract Set<Cancion> getCanciones();
 

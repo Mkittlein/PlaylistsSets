@@ -13,7 +13,7 @@ import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
-public class PlaylistSimple extends Playlist {
+public class PlaylistSimple implements Playlist {
     private String id;
     private String name;
     private int size;
@@ -21,7 +21,7 @@ public class PlaylistSimple extends Playlist {
     private Image image;
     private boolean cached;
     private Set<Cancion> canciones = new HashSet<Cancion>();
-
+    private PlaylistsWrapper playlistsWrapper;
 
 
     public PlaylistSimple(String id, String name, int size, String url, PlaylistsWrapper playlistsWrapper){

@@ -2,10 +2,8 @@ package Kittlein.Sets;
 
 import java.util.Set;
 
-public class PlaylistResta extends Playlist{
-        private Playlist playlist1;
+public class PlaylistResta extends PlaylistCompuesta{
 
-        private Playlist playlist2;
 
         public PlaylistResta(Playlist p1, Playlist p2){
             playlist1=p1;
@@ -22,9 +20,6 @@ public class PlaylistResta extends Playlist{
             return aux;
         }
 
-    public void add(Playlist p2){
-        this.playlist2=p2;
-    }
 
         @Override
         public int getSize() {

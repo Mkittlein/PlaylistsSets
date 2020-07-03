@@ -2,10 +2,7 @@ package Kittlein.Sets;
 
 import java.util.Set;
 
-public class PlaylistDiferencia extends Playlist {
-    private Playlist playlist1;
-
-    private Playlist playlist2;
+public class PlaylistDiferencia extends PlaylistCompuesta {
 
     public PlaylistDiferencia(Playlist p1, Playlist p2){
         playlist1=p1;
@@ -15,10 +12,6 @@ public class PlaylistDiferencia extends Playlist {
     public PlaylistDiferencia(Playlist p1){
         this.playlist1=p1;
         playlist2=new PlaylistSimple("","",0,"",null);
-    }
-
-    public void add(Playlist p2){
-        this.playlist2=p2;
     }
 
 
