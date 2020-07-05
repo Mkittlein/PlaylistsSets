@@ -1,5 +1,8 @@
 package Kittlein.Sets;
 
+
+import java.util.Objects;
+
 public class Cancion {
     private String id;
     private String name;
@@ -23,16 +26,24 @@ public class Cancion {
         return name;
     }
 
+
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
+        if (this == o) {
+            return true;
+        }
+
         Cancion cancion = (Cancion) o;
-        return id == cancion.getId();//ID debería ser suficiente, si dos objetos cancion tienen ids iguales pero difieren en otros atributos hubo un problema cargando desde la API
+        return id.equals(cancion.getId());//ID debería ser suficiente, si dos objetos cancion tienen ids iguales pero difieren en otros atributos hubo un problema cargando desde la API
     }
+
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+
 
 
 
