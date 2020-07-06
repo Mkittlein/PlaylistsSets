@@ -5,10 +5,7 @@ import Kittlein.Sets.Playlist;
 import Kittlein.Sets.PlaylistSimple;
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
-import com.wrapper.spotify.model_objects.specification.Image;
-import com.wrapper.spotify.model_objects.specification.Paging;
-import com.wrapper.spotify.model_objects.specification.PlaylistSimplified;
-import com.wrapper.spotify.model_objects.specification.PlaylistTrack;
+import com.wrapper.spotify.model_objects.specification.*;
 import com.wrapper.spotify.requests.data.playlists.GetListOfCurrentUsersPlaylistsRequest;
 import com.wrapper.spotify.requests.data.playlists.GetPlaylistCoverImageRequest;
 import com.wrapper.spotify.requests.data.playlists.GetPlaylistsTracksRequest;
@@ -16,7 +13,9 @@ import com.wrapper.spotify.requests.data.playlists.GetPlaylistsTracksRequest;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PlaylistsWrapper {
     private SpotifyApi spotifyApi;
@@ -75,10 +74,10 @@ public class PlaylistsWrapper {
         this.spotifyApi=spotifyApi;
     }
 
-    public List<Cancion> getCanciones(String id, int size) {
+    public Set<Cancion> getCanciones(String id, int size) {
         int total= size;
         int offset=0;
-        List<Cancion> tracks= new ArrayList<>();
+        Set<Cancion> tracks= new HashSet<Cancion>();
         while (total>0) {
             getPlaylistsTracksRequest = spotifyApi
                     .getPlaylistsTracks(id)
@@ -92,8 +91,23 @@ public class PlaylistsWrapper {
             total-=50;
             try {
                 Paging<PlaylistTrack> playlistTrackPaging = getPlaylistsTracksRequest.execute();
+                int i=0;
                 for (PlaylistTrack t : playlistTrackPaging.getItems()){
-                    tracks.add(new Cancion(t.getTrack().getName(),t.getTrack().getId(),t.getTrack().getPreviewUrl(),t.getTrack().getArtists()[0].getName(),t.getTrack().getArtists()[0].getId(),t.getTrack().getAlbum().getName(),t.getTrack().getAlbum().getId()));
+                    if (t.getTrack()!=null) {
+
+                        i++;
+                        System.out.println("Cancion nro " + i + " de " + playlistTrackPaging.getTotal() + " " + playlistTrackPaging.getItems().length );
+                        System.out.println(t.getTrack().getName());
+                        System.out.println(t.getTrack().getId());
+                        System.out.println(t.getTrack().getPreviewUrl());
+                        System.out.println(t.getTrack().getArtists()[0].getName());
+                        System.out.println(t.getTrack().getArtists()[0].getId());
+                        System.out.println(t.getTrack().getAlbum().getName());
+                        System.out.println(t.getTrack().getArtists()[0].getId());
+                        System.out.println(t.getTrack().getAlbum().getName());
+                        System.out.println(t.getTrack().getAlbum().getId());
+                        tracks.add(new Cancion(t.getTrack().getName(), t.getTrack().getId(), t.getTrack().getPreviewUrl(), t.getTrack().getArtists()[0].getName(), t.getTrack().getArtists()[0].getId(), t.getTrack().getAlbum().getName(), t.getTrack().getAlbum().getId()));
+                    }
                 }
             } catch (IOException | SpotifyWebApiException e) {
                 System.out.println("Error: " + e.getMessage());

@@ -55,12 +55,16 @@ public class PlaylistSimple implements Playlist {
     public String toString(){return this.getName();}
 
     public Set<Cancion> getCanciones() {
-        if (cached)
-            return canciones;
+        Set<Cancion> aux = new HashSet<Cancion>();
+        if (cached){
+            aux.addAll(canciones);
+            return aux;
+        }
         else{
             actualizarContenido();
             cached=true;
         }
+        aux.addAll(canciones);
         return canciones;
     }
 
