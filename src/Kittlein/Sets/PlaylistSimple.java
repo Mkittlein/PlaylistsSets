@@ -33,6 +33,17 @@ public class PlaylistSimple implements Playlist {
         this.playlistsWrapper = playlistsWrapper;
     }
 
+    public PlaylistSimple(String id, String name, int size, String url, PlaylistsWrapper playlistsWrapper,Set<Cancion> canciones){
+        this.id=id;
+        this.name=name;
+        this.size=size;
+        this.cached=true;
+        this.url=url;
+        this.playlistsWrapper = playlistsWrapper;
+        this.canciones=canciones;
+    }
+
+
     private void actualizarContenido(){
         URL url = null;
         try {
@@ -68,7 +79,7 @@ public class PlaylistSimple implements Playlist {
         return canciones;
     }
 
-    public void add(Playlist p){
+    public void addPlaylist(Playlist p){
         this.id=((PlaylistSimple)p).id;
         this.name=((PlaylistSimple)p).name;
         this.size=((PlaylistSimple)p).size;
@@ -77,6 +88,10 @@ public class PlaylistSimple implements Playlist {
         this.cached=((PlaylistSimple)p).cached;
         this.canciones=((PlaylistSimple)p).canciones;
         this.playlistsWrapper=((PlaylistSimple)p).playlistsWrapper;
+    }
+
+    public void guardarPlaylist() {
+        playlistsWrapper.createPlaylist(this);
     }
 
     public String getName(){

@@ -135,13 +135,22 @@
     -fx-font-family: 'Roboto';
     -fx-font-weight: bold;
     -fx-background-insets: 0.0;
-    -fx-background-radius: 4.0;
+    -fx-background-radius: 10.0;
+    -fx-border-color: -swatch-500;
+    -fx-border-radius: 10.0;
+    -fx-border-width: 2;
     -fx-padding: 0.7em;
     -fx-alignment: CENTER;
 }
 
+
+
 .button-raised .button .text, .button-flat .button .text {
     -fx-text-weight: Bold;
+}
+
+.button:hover {
+    -fx-background-color: -swatch-dark-grey;
 }
 
 .button:default {
@@ -162,7 +171,7 @@
 
 .toggle-button:armed, .toggle-button:selected, .button:armed, .button:default:armed
 {
-    -fx-background-color: -swatch-grey;
+    -fx-background-color: -swatch-light-grey;
     -fx-text-fill: -fx-text-button-colored;
 }
 
@@ -740,9 +749,11 @@
  * Tool bar	& Menu bar		                       			  				   *
  *                                                                             *
  ******************************************************************************/
+
+
 .tool-bar, .menu-bar { /* top */
     -fx-background-color: -swatch-toolbar;
-    -fx-border-width: 0 0 2 0;
+    -fx-border-width: 2 2 2 2;
     -fx-border-color: -swatch-grey;
     -fx-min-height: 48;
     -fx-alignment: CENTER_LEFT;
@@ -764,7 +775,7 @@
     -fx-min-height: 42;
     -fx-min-width: 42;
     -fx-padding: 0;
-    -fx-background-radius: 0;
+    -fx-background-radius: 5;
 }
 
 .tool-bar .button:pressed, .tool-bar .toggle-button:pressed, .tool-bar .toggle-button:selected

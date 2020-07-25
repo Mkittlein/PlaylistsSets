@@ -5,13 +5,12 @@ import Kittlein.Sets.Playlist;
 import Kittlein.Sets.PlaylistSimple;
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
+import com.wrapper.spotify.model_objects.special.SnapshotResult;
 import com.wrapper.spotify.model_objects.specification.*;
-import com.wrapper.spotify.requests.data.playlists.GetListOfCurrentUsersPlaylistsRequest;
-import com.wrapper.spotify.requests.data.playlists.GetPlaylistCoverImageRequest;
-import com.wrapper.spotify.requests.data.playlists.GetPlaylistsTracksRequest;
+import com.wrapper.spotify.requests.data.playlists.*;
+import com.wrapper.spotify.requests.data.users_profile.GetCurrentUsersProfileRequest;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -21,6 +20,8 @@ public class PlaylistsWrapper {
     private SpotifyApi spotifyApi;
     private   GetPlaylistsTracksRequest getPlaylistsTracksRequest;
     private GetListOfCurrentUsersPlaylistsRequest getListOfCurrentUsersPlaylistsRequest;
+    private CreatePlaylistRequest createPlaylistRequest;
+    private AddTracksToPlaylistRequest addTracksToPlaylistRequest;
 
     public List<Playlist> getListOfCurrentUsersPlaylists() {
         List<Playlist> PL = new ArrayList<Playlist>();
@@ -58,7 +59,8 @@ public class PlaylistsWrapper {
                 .build();
         try {
             Image[] images = getPlaylistCoverImageRequest.execute();
-            return images[0];
+            if(images.length>=1)
+                return images[0];
         } catch (IOException | SpotifyWebApiException e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -94,19 +96,8 @@ public class PlaylistsWrapper {
                 int i=0;
                 for (PlaylistTrack t : playlistTrackPaging.getItems()){
                     if (t.getTrack()!=null) {
-
                         i++;
-                        System.out.println("Cancion nro " + i + " de " + playlistTrackPaging.getTotal() + " " + playlistTrackPaging.getItems().length );
-                        System.out.println(t.getTrack().getName());
-                        System.out.println(t.getTrack().getId());
-                        System.out.println(t.getTrack().getPreviewUrl());
-                        System.out.println(t.getTrack().getArtists()[0].getName());
-                        System.out.println(t.getTrack().getArtists()[0].getId());
-                        System.out.println(t.getTrack().getAlbum().getName());
-                        System.out.println(t.getTrack().getArtists()[0].getId());
-                        System.out.println(t.getTrack().getAlbum().getName());
-                        System.out.println(t.getTrack().getAlbum().getId());
-                        tracks.add(new Cancion(t.getTrack().getName(), t.getTrack().getId(), t.getTrack().getPreviewUrl(), t.getTrack().getArtists()[0].getName(), t.getTrack().getArtists()[0].getId(), t.getTrack().getAlbum().getName(), t.getTrack().getAlbum().getId()));
+                        tracks.add(new Cancion(t.getTrack().getName(), t.getTrack().getId(), t.getTrack().getPreviewUrl(), t.getTrack().getArtists()[0].getName(), t.getTrack().getArtists()[0].getId(), t.getTrack().getAlbum().getName(), t.getTrack().getAlbum().getId(),t.getTrack().getUri()));
                     }
                 }
             } catch (IOException | SpotifyWebApiException e) {
@@ -114,6 +105,77 @@ public class PlaylistsWrapper {
             }
         }
         return tracks;
+    }
+
+
+    public void createPlaylist(Playlist p){
+        String id="";
+        try {
+            id=spotifyApi.getCurrentUsersProfile().build().execute().getId();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SpotifyWebApiException e) {
+            e.printStackTrace();
+        }
+        createPlaylistRequest = spotifyApi.createPlaylist(id,p.getName())
+          .collaborative(false)
+          .public_(true)
+          .description("🎶🎵🎶Creada con PlaylistSets🎶🎵🎶")
+                .build();
+        try {
+
+
+            com.wrapper.spotify.model_objects.specification.Playlist playlist = createPlaylistRequest.execute();
+            addTracks(playlist,p);
+
+        } catch (IOException | SpotifyWebApiException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    private String[][] chunkArray(String[] array) {
+        int numOfChunks = (int)Math.ceil((double)array.length / 100);
+        String[][] output = new String[numOfChunks][];
+
+        for(int i = 0; i < numOfChunks; ++i) {
+            int start = i * 100;
+            int length = Math.min(array.length - start, 100);
+
+            String[] temp = new String[length];
+            System.arraycopy(array, start, temp, 0, length);
+            output[i] = temp;
+        }
+        return output;
+    }
+
+
+    public void addTracks(com.wrapper.spotify.model_objects.specification.Playlist spotifyPlaylist,Playlist playlist){
+
+        List<String> aux= new ArrayList<>();
+
+        for(Cancion c : playlist.getCanciones()){
+         aux.add(c.getUri());
+        }
+        String[] uris= aux.toArray(new String[0]);
+        String[][] urisArray=chunkArray(uris);
+        System.out.println("URIS DE LA PLAYLIST: "+aux);
+        try {
+        for(int i=0;i<urisArray.length;i++) {
+
+            System.out.println("i=" + i + "," + urisArray[i].length + "  canciones");
+            for (String s : urisArray[i])
+                System.out.println("\t    " + s);
+            addTracksToPlaylistRequest = spotifyApi.addTracksToPlaylist(spotifyPlaylist.getId(), urisArray[i]).build();
+            SnapshotResult snapshotResult = addTracksToPlaylistRequest.execute();
+           // System.out.println(snapshotResult.getSnapshotId());
+        }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (SpotifyWebApiException e) {
+                e.printStackTrace();
+            }
+
+
     }
 
 }

@@ -57,7 +57,7 @@ public class App extends Application {
         stage.setTitle("Playlists Sets - "+userWrapper.getName());
         Parent root = appLoader.load();
 
-        stage.setScene(new Scene(root, 800, 600));
+        stage.setScene(new Scene(root));
 
     }
 

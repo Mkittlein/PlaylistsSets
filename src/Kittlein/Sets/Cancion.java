@@ -11,8 +11,9 @@ public class Cancion {
     private String artistid;
     private String albumname;
     private String albumid;
+    private  String uri;
 
-    public Cancion(String name, String id, String url, String artistname, String artistid, String albumname, String albumid) {
+    public Cancion(String name, String id, String url, String artistname, String artistid, String albumname, String albumid,String uri) {
         this.id = id;
         this.name = name;
         this.url = url;
@@ -20,6 +21,7 @@ public class Cancion {
         this.artistid = artistid;
         this.albumname = albumname;
         this.albumid = albumid;
+        this.uri=uri;
     }
 
     public String toString(){
@@ -73,5 +75,9 @@ public class Cancion {
 
     public String getAlbumid() {
         return albumid;
+    }
+
+    public String getUri() {
+        return uri;
     }
 }

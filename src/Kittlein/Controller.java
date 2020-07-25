@@ -3,7 +3,6 @@ package Kittlein;
 import Kittlein.Sets.*;
 import Kittlein.Wrapper.PlaylistsWrapper;
 import Kittlein.Wrapper.UserWrapper;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 
 import javafx.geometry.Pos;
@@ -17,7 +16,7 @@ import javafx.scene.layout.VBox;
 
 
 import java.awt.*;
-import java.awt.ScrollPane;
+import java.awt.TextField;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -46,11 +45,13 @@ public class Controller {
     public Button ButtonResta;
     public Button ButtonInterseccion;
     public Button ButtonUnion;
+    public TextField textNombrePlaylist;
     public VBox Contenido;
     public Label PlaylistName;
     public ListView PlaylistTracks;
     public ListView OpList;
     public Button buttonGuardarPlaylist;
+
 
 
     public Controller() {
@@ -114,7 +115,7 @@ public class Controller {
 
     public void addPlaylistSimple(MouseEvent mouseEvent) {
             PlaylistSimple p = (PlaylistSimple) PList.getSelectionModel().getSelectedItem();
-            playlistOp.add(p);
+            playlistOp.addPlaylist(p);
             addOperacion(p.getName());
             enableOperations();
     }
@@ -176,6 +177,14 @@ public class Controller {
         System.out.println("Guardada Playlist: "+playlistOp);
         System.out.println("Tamaño: "+playlistOp.getSize());
         System.out.println(playlistOp.getCanciones());
+        String name=playlistOp.getName();
+        /*
+        if (textNombrePlaylist.getText().length()>0){
+            name= textNombrePlaylist.getText();
+        }*/
+        PlaylistSimple p = new PlaylistSimple("",name,playlistOp.getSize(),"",playlistsWrapper,playlistOp.getCanciones());
+
+        p.guardarPlaylist();
         //disableOperations();
     }
 }
