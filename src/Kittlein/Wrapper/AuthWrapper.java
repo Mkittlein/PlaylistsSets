@@ -8,6 +8,7 @@ import com.wrapper.spotify.requests.authorization.authorization_code.Authorizati
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
 import com.wrapper.spotify.requests.authorization.client_credentials.ClientCredentialsRequest;
+import org.apache.hc.core5.http.ParseException;
 
 import java.awt.*;
 import java.io.*;
@@ -92,7 +93,7 @@ public class AuthWrapper {
             spotifyApi.setAccessToken(clientCredentials.getAccessToken());
 
             System.out.println("Expires in: " + clientCredentials.getExpiresIn());
-        } catch (IOException | SpotifyWebApiException e) {
+        } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -104,7 +105,7 @@ public class AuthWrapper {
             spotifyApi.setAccessToken(authorizationCodeCredentials.getAccessToken());
             spotifyApi.setRefreshToken(authorizationCodeCredentials.getRefreshToken());
             System.out.println("Expires in: " + authorizationCodeCredentials.getExpiresIn());
-        } catch (IOException | SpotifyWebApiException e) {
+        } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error en authorizationCodeRefresh_Sync: " + e.getMessage());
         }
     }
@@ -118,7 +119,7 @@ public class AuthWrapper {
             System.out.println("Codigo Pedido con éxito, expira en: " + authorizationCodeCredentials.getExpiresIn()+"s");
             System.out.println("Refresh Token: "+spotifyApi.getRefreshToken());
             authorizationCodeRefreshRequest = spotifyApi.authorizationCodeRefresh().build();
-        } catch (IOException | SpotifyWebApiException e) {
+        } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error en authorizationCode_Sync: " + e.getMessage());
         }
     }

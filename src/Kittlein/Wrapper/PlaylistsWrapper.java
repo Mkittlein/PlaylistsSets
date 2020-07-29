@@ -8,7 +8,7 @@ import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.special.SnapshotResult;
 import com.wrapper.spotify.model_objects.specification.*;
 import com.wrapper.spotify.requests.data.playlists.*;
-import com.wrapper.spotify.requests.data.users_profile.GetCurrentUsersProfileRequest;
+import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,10 +18,10 @@ import java.util.Set;
 
 public class PlaylistsWrapper {
     private SpotifyApi spotifyApi;
-    private   GetPlaylistsTracksRequest getPlaylistsTracksRequest;
+    private   GetPlaylistsItemsRequest getPlaylistsItemsRequest;
     private GetListOfCurrentUsersPlaylistsRequest getListOfCurrentUsersPlaylistsRequest;
     private CreatePlaylistRequest createPlaylistRequest;
-    private AddTracksToPlaylistRequest addTracksToPlaylistRequest;
+    private AddItemsToPlaylistRequest addItemsToPlaylistRequest;
 
     public List<Playlist> getListOfCurrentUsersPlaylists() {
         List<Playlist> PL = new ArrayList<Playlist>();
@@ -42,7 +42,7 @@ public class PlaylistsWrapper {
                 offset+=50;
                 total-=50;
             }
-        } catch (IOException | SpotifyWebApiException e) {
+        } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
         }
         getListOfCurrentUsersPlaylistsRequest= spotifyApi
@@ -61,7 +61,7 @@ public class PlaylistsWrapper {
             Image[] images = getPlaylistCoverImageRequest.execute();
             if(images.length>=1)
                 return images[0];
-        } catch (IOException | SpotifyWebApiException e) {
+        } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
         }
         return null;
@@ -81,8 +81,8 @@ public class PlaylistsWrapper {
         int offset=0;
         Set<Cancion> tracks= new HashSet<Cancion>();
         while (total>0) {
-            getPlaylistsTracksRequest = spotifyApi
-                    .getPlaylistsTracks(id)
+            getPlaylistsItemsRequest = spotifyApi
+                    .getPlaylistsItems(id)
 //          .fields("description")
             .limit(50)
             .offset(offset)
@@ -91,16 +91,17 @@ public class PlaylistsWrapper {
                     .build();
             offset+=50;
             total-=50;
+
             try {
-                Paging<PlaylistTrack> playlistTrackPaging = getPlaylistsTracksRequest.execute();
-                int i=0;
-                for (PlaylistTrack t : playlistTrackPaging.getItems()){
-                    if (t.getTrack()!=null) {
-                        i++;
-                        tracks.add(new Cancion(t.getTrack().getName(), t.getTrack().getId(), t.getTrack().getPreviewUrl(), t.getTrack().getArtists()[0].getName(), t.getTrack().getArtists()[0].getId(), t.getTrack().getAlbum().getName(), t.getTrack().getAlbum().getId(),t.getTrack().getUri()));
+                Paging<PlaylistTrack> playlistTrackPaging = getPlaylistsItemsRequest.execute();
+                for (PlaylistTrack i : playlistTrackPaging.getItems()){
+                    Track t = (Track) i.getTrack();
+                    if (t!=null) {
+
+                        tracks.add(new Cancion(t.getName(), t.getId(), t.getPreviewUrl(), t.getArtists()[0].getName(), t.getArtists()[0].getId(), t.getAlbum().getName(), t.getAlbum().getId(),t.getUri()));
                     }
                 }
-            } catch (IOException | SpotifyWebApiException e) {
+            } catch (IOException | SpotifyWebApiException | ParseException e) {
                 System.out.println("Error: " + e.getMessage());
             }
         }
@@ -116,6 +117,8 @@ public class PlaylistsWrapper {
             e.printStackTrace();
         } catch (SpotifyWebApiException e) {
             e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
         createPlaylistRequest = spotifyApi.createPlaylist(id,p.getName())
           .collaborative(false)
@@ -128,18 +131,18 @@ public class PlaylistsWrapper {
             com.wrapper.spotify.model_objects.specification.Playlist playlist = createPlaylistRequest.execute();
             addTracks(playlist,p);
 
-        } catch (IOException | SpotifyWebApiException e) {
+        } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
 
     private String[][] chunkArray(String[] array) {
-        int numOfChunks = (int)Math.ceil((double)array.length / 100);
+        int numOfChunks = (int)Math.ceil((double)array.length / 50);
         String[][] output = new String[numOfChunks][];
 
         for(int i = 0; i < numOfChunks; ++i) {
-            int start = i * 100;
-            int length = Math.min(array.length - start, 100);
+            int start = i * 50;
+            int length = Math.min(array.length - start, 50);
 
             String[] temp = new String[length];
             System.arraycopy(array, start, temp, 0, length);
@@ -159,22 +162,20 @@ public class PlaylistsWrapper {
         String[] uris= aux.toArray(new String[0]);
         String[][] urisArray=chunkArray(uris);
         System.out.println("URIS DE LA PLAYLIST: "+aux);
-        try {
-        for(int i=0;i<urisArray.length;i++) {
 
-            System.out.println("i=" + i + "," + urisArray[i].length + "  canciones");
-            for (String s : urisArray[i])
-                System.out.println("\t    " + s);
-            addTracksToPlaylistRequest = spotifyApi.addTracksToPlaylist(spotifyPlaylist.getId(), urisArray[i]).build();
-            SnapshotResult snapshotResult = addTracksToPlaylistRequest.execute();
-           // System.out.println(snapshotResult.getSnapshotId());
-        }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (SpotifyWebApiException e) {
+        for(int i=0;i<urisArray.length;i++) {
+            try {
+            System.out.println("i=" + i + ", " + urisArray[i].length + "  canciones");
+            //for (String s : urisArray[i])
+              //  System.out.println("\t    " + s);
+                GetPlaylistRequest getPlaylistRequest = spotifyApi.getPlaylist(spotifyPlaylist.getId()).build();
+
+            addItemsToPlaylistRequest = spotifyApi.addItemsToPlaylist(spotifyPlaylist.getId(), urisArray[i]).build();
+            addItemsToPlaylistRequest.execute();
+        } catch (IOException | SpotifyWebApiException| ParseException e) {
                 e.printStackTrace();
             }
-
+        }
 
     }
 
