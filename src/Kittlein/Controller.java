@@ -22,7 +22,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Controller {
 
@@ -68,8 +70,8 @@ public class Controller {
         operaciones=new ArrayList<>();
         playlists= new ArrayList<Playlist>();
         List<String> aux =new ArrayList<String>();
-        playlistOp=new PlaylistSimple(null,null,0,null,null);
-        playlists= new ArrayList<Playlist>();
+        playlistOp=new PlaylistSimple(null, null, 0, null, playlistsWrapper, new HashSet<Cancion>());
+        playlists = new ArrayList<Playlist>();
         playlists.clear();
         playlists = playlistsWrapper.getListOfCurrentUsersPlaylists();
         operaciones.clear();

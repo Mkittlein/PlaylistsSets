@@ -11,12 +11,13 @@ public class PlaylistResta extends PlaylistCompuesta{
         }
         public PlaylistResta(Playlist p1){
             this.playlist1=p1;
-            playlist2=new PlaylistSimple("","",0,"",null);
+            playlist2=null;
         }
 
         public Set<Cancion> getCanciones(){
             Set<Cancion> aux = playlist1.getCanciones();
-            aux.removeAll(playlist2.getCanciones());
+            if(playlist2!=null)
+                aux.removeAll(playlist2.getCanciones());
             return aux;
         }
 
@@ -24,11 +25,14 @@ public class PlaylistResta extends PlaylistCompuesta{
         @Override
         public int getSize() {
             Set<Cancion> aux = playlist1.getCanciones();
-            aux.removeAll(playlist2.getCanciones());
+            if(playlist2!=null)
+                aux.removeAll(playlist2.getCanciones());
             return aux.size();
         }
 
         public String getName(){
-            return playlist1.getName()+" - "+playlist2.getName();
+            if(playlist2!=null)
+                return playlist1.getName()+" - "+playlist2.getName();
+            else return playlist1.getName();
         }
 }
