@@ -5,7 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600" prefWidth="900" style="-fx-background-color: #3c3c3c;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600" prefWidth="900" style="-fx-background-color: #3c3c3c;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kittlein.Controller">
     <children>
       <HBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -13,7 +13,14 @@
                <content>
                         <VBox alignment="CENTER" styleClass="card" HBox.hgrow="ALWAYS">
                             <children>
-                                <Label alignment="CENTER" styleClass="card-title" text="Playlists" />
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Pane />
+                                      <Label alignment="CENTER" styleClass="card-title" text="Playlists" textAlignment="CENTER" />
+                              <Pane minWidth="10.0" />
+                           </children>
+                        </HBox>
+                        <Pane minHeight="10.0" />
                                 <ListView fx:id="PList" onKeyPressed="#PlaylistSelected" onMouseClicked="#PlaylistSelected" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
                             </children>
                             <padding>
@@ -62,17 +69,19 @@
                   <VBox alignment="TOP_CENTER" styleClass="card" HBox.hgrow="ALWAYS">
                      <children>
                         <Label alignment="CENTER" styleClass="card-title" text="Operaciones" />
-                        <HBox alignment="CENTER">
+                        <HBox alignment="CENTER" prefHeight="52.0" prefWidth="411.0">
                            <children>
-                              <TextField prefHeight="36.0" prefWidth="172.0"/>
-                              <Button fx:id="buttonGuardarPlaylist" accessibleHelp="Guardar Playlist" alignment="TOP_RIGHT" contentDisplay="CENTER" defaultButton="true" disable="true" mnemonicParsing="false" onMouseClicked="#guardarPlaylist" text="Guardar" textAlignment="CENTER">
+                              <Pane layoutX="294.0" layoutY="10.0" minWidth="10.0" />
+                              <TextField fx:id="TextNombrePlaylist" alignment="BASELINE_LEFT" prefHeight="36.0" promptText="Playlist..." HBox.hgrow="NEVER" />
+                              <Pane minWidth="10.0" HBox.hgrow="NEVER" />
+                              <Button fx:id="buttonGuardarPlaylist" accessibleHelp="Guardar Playlist" alignment="CENTER_RIGHT" contentDisplay="CENTER" defaultButton="true" disable="true" layoutX="309.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#guardarPlaylist" text="Guardar" textAlignment="CENTER">
                                  <tooltip>
                                     <Tooltip text="Guardar Playlist" />
                                  </tooltip>
                               </Button>
                            </children>
                         </HBox>
-                        <ListView fx:id="OpList" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+                        <ListView fx:id="OpList" onMouseClicked="#MostrarTemas" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
                          <Pane minHeight="10.0" VBox.vgrow="NEVER" />
                         <HBox alignment="BOTTOM_CENTER">
                            <children>
@@ -84,7 +93,7 @@
                                             <Pane HBox.hgrow="NEVER" />
                                             <ImageView fitHeight="50" preserveRatio="true">
                                                 <image>
-                                                    <Image url="@Union.png" />
+                                                    <Image url="@res/Union.png" />
                                                 </image>
                                             </ImageView>
                                         </children>
@@ -102,7 +111,7 @@
                                               <Pane HBox.hgrow="NEVER" />
                                               <ImageView fitHeight="50" preserveRatio="true">
                                                   <image>
-                                                      <Image url="@Interseccion.png" />
+                                                      <Image url="@res/Interseccion.png" />
                                                   </image>
                                               </ImageView>
                                           </children>
@@ -120,7 +129,7 @@
                                               <Pane HBox.hgrow="NEVER" />
                                               <ImageView fitHeight="50" preserveRatio="true">
                                                   <image>
-                                                      <Image url="@Resta.png" />
+                                                      <Image url="@res/Resta.png" />
                                                   </image>
                                               </ImageView>
                                           </children>
@@ -138,7 +147,7 @@
                                               <Pane HBox.hgrow="NEVER" />
                                               <ImageView fitHeight="50" preserveRatio="true">
                                                   <image>
-                                                      <Image url="@Diferencia.png" />
+                                                      <Image url="@res/Diferencia.png" />
                                                   </image>
                                               </ImageView>
                                           </children>

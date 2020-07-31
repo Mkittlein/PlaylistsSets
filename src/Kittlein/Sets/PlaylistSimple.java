@@ -6,6 +6,9 @@ import javafx.scene.image.Image;
 
 
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -47,12 +50,18 @@ public class PlaylistSimple implements Playlist {
     private void actualizarContenido(){
         URL url = null;
         try {
-            url = new URL(playlistsWrapper.getImage(id).getUrl());
-        image = SwingFXUtils.toFXImage(ImageIO.read(url),null);
-        canciones.addAll(playlistsWrapper.getCanciones(id,size));
+            if(playlistsWrapper.getImage(id)!= null){
+                url = new URL(playlistsWrapper.getImage(id).getUrl());
+                image = SwingFXUtils.toFXImage(ImageIO.read(url),null);}
+            else{
+                image =new Image(new FileInputStream(new File("./src/Kittlein/GUI/res/Logo.png")));
+
+            }
+            canciones.addAll(playlistsWrapper.getCanciones(id,size));
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     public javafx.scene.image.Image getImage() {

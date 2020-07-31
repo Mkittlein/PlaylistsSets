@@ -96,9 +96,8 @@ public class PlaylistsWrapper {
                 Paging<PlaylistTrack> playlistTrackPaging = getPlaylistsItemsRequest.execute();
                 for (PlaylistTrack i : playlistTrackPaging.getItems()){
                     Track t = (Track) i.getTrack();
-                    if (t!=null) {
-
-                        tracks.add(new Cancion(t.getName(), t.getId(), t.getPreviewUrl(), t.getArtists()[0].getName(), t.getArtists()[0].getId(), t.getAlbum().getName(), t.getAlbum().getId(),t.getUri()));
+                    if (t!=null && !t.getUri().contains("local")){//No los temas locales generan errores cuando quiero crear una playlist, ya que solo los tiene el creador de la playlist original, que generalmente no es el usuario
+                            tracks.add(new Cancion(t.getName(), t.getId(), t.getPreviewUrl(), t.getArtists()[0].getName(), t.getArtists()[0].getId(), t.getAlbum().getName(), t.getAlbum().getId(),t.getUri()));
                     }
                 }
             } catch (IOException | SpotifyWebApiException | ParseException e) {

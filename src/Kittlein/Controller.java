@@ -1,22 +1,24 @@
 package Kittlein;
-
+import javafx.collections.ObservableList;
+import javafx.scene.control.TextField;
 import Kittlein.Sets.*;
 import Kittlein.Wrapper.PlaylistsWrapper;
 import Kittlein.Wrapper.UserWrapper;
-import javafx.event.ActionEvent;
 
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 
 import java.awt.*;
-import java.awt.TextField;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -24,19 +26,23 @@ import java.util.List;
 
 public class Controller {
 
-    public Button buttonAdd;
+
+    public Button buttonVerTemas;
+
     private App app;
     private UserWrapper userWrapper;
     private PlaylistsWrapper playlistsWrapper;
     private List<Playlist> playlists;
-    private List<String> operaciones=new ArrayList<>();
-    private Playlist playlistOp=new PlaylistSimple(null,null,0,null,null);
+    private List<String> operaciones;
+    private Playlist playlistOp;
+    private List<String> vacia;
 
 
     //Variables declaradas en el FXML
-    public VBox LogScreen;
-    public TextArea LogText;
-    public Button LogIn;
+
+   // public Button BottonReload;
+   public Button buttonGuardarPlaylist;
+    public Button buttonAdd;
     public ListView PList;
     public Label PlaylistSize;
     public Hyperlink PlaylistLink;
@@ -45,16 +51,29 @@ public class Controller {
     public Button ButtonResta;
     public Button ButtonInterseccion;
     public Button ButtonUnion;
-    public TextField textNombrePlaylist;
+    public TextField TextNombrePlaylist;
     public VBox Contenido;
     public Label PlaylistName;
     public ListView PlaylistTracks;
     public ListView OpList;
-    public Button buttonGuardarPlaylist;
 
 
 
     public Controller() {
+    }
+
+    public void iniciar(){
+        vacia=new ArrayList<>();
+        vacia.add("");
+        operaciones=new ArrayList<>();
+        playlists= new ArrayList<Playlist>();
+        List<String> aux =new ArrayList<String>();
+        playlistOp=new PlaylistSimple(null,null,0,null,null);
+        playlists= new ArrayList<Playlist>();
+        playlists.clear();
+        playlists = playlistsWrapper.getListOfCurrentUsersPlaylists();
+        operaciones.clear();
+        resetUi();
     }
 
     public void PlaylistSelected(){
@@ -71,39 +90,28 @@ public class Controller {
         });
         PlaylistImage.setImage(p.getImage());
         PlaylistTracks.getItems().clear();
-        PlaylistTracks.getItems().addAll(p.getCanciones());
+        if(p.getSize()>0)
+            PlaylistTracks.getItems().addAll(p.getCanciones());
+        else
+            PlaylistTracks.getItems().addAll(vacia);
         PlaylistTracks.refresh();
     }
 
-    public void LogIn(ActionEvent actionEvent) {
-        LogScreen.getChildren().remove(LogText);
-        LogScreen.getChildren().remove(LogIn);
-        LogScreen.getChildren().add(new ProgressIndicator() );
-        LogScreen.fillWidthProperty().setValue(true);
-        LogScreen.setAlignment(Pos.CENTER);
-        app= new App();
-        try {
-            app.iniciar(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        List<String> aux =new ArrayList<String>();
-        aux.add("");
-        OpList.getItems().addAll(aux);//Dummy para que no tenga un fondo blanco hasta que se le carguen operaciones
-        playlists = playlistsWrapper.getListOfCurrentUsersPlaylists();
-        updateUi();
-    }
+    private void resetUi(){
+        disableOperations();
 
-    private void updateUi(){
+        PList.getItems().clear();
+        OpList.getItems().clear();
+
+        OpList.getItems().addAll(vacia);
         PList.getItems().addAll(playlists);
-        PList.getSelectionModel().select(0);
+
         PList.refresh();
-        OpList.getItems().addAll(operaciones);
         OpList.refresh();
+
+        PList.getSelectionModel().select(0);
         PlaylistSelected();
     }
-
-
 
     public void setUserWrapper(UserWrapper userWrapper) {
         this.userWrapper = userWrapper;
@@ -178,13 +186,30 @@ public class Controller {
         System.out.println("Tamaño: "+playlistOp.getSize());
         System.out.println(playlistOp.getCanciones());
         String name=playlistOp.getName();
-        /*
-        if (textNombrePlaylist.getText().length()>0){
-            name= textNombrePlaylist.getText();
-        }*/
-        PlaylistSimple p = new PlaylistSimple("",name,playlistOp.getSize(),"",playlistsWrapper,playlistOp.getCanciones());
 
+        if (TextNombrePlaylist.getText()!=null && TextNombrePlaylist.getText().length()>0){
+            name= TextNombrePlaylist.getText();
+        }
+        PlaylistSimple p = new PlaylistSimple("",name,playlistOp.getSize(),"",playlistsWrapper,playlistOp.getCanciones());
         p.guardarPlaylist();
-        //disableOperations();
+        iniciar();
+    }
+
+    public void MostrarTemas(MouseEvent mouseEvent) {
+        PlaylistName.setText(playlistOp.getName());
+        PlaylistSize.setText(Integer.toString(playlistOp.getSize()));
+        PlaylistLink.setText("");
+        try {
+            PlaylistImage.setImage(new Image(new FileInputStream(new File("./src/Kittlein/GUI/res/Logo.png"))));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        PlaylistTracks.getItems().clear();
+        if(playlistOp.getSize()>0)
+            PlaylistTracks.getItems().addAll(playlistOp.getCanciones());
+        else
+            PlaylistTracks.getItems().addAll(vacia);
+        PlaylistTracks.refresh();
+
     }
 }

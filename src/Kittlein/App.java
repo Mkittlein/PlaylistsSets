@@ -31,33 +31,33 @@ public class App extends Application {
 
 
 
-    public void iniciar(Controller main_controller) throws IOException {
+    public void iniciar() throws IOException {
         spotifyApi = new SpotifyApi.Builder()
             .setClientId(clientID)
             .setClientSecret(clientSecret)
             .setRedirectUri(redirectURI)
             .build();
-        this.controller=main_controller;
         authWrapper = new AuthWrapper(spotifyApi);
         authWrapper.LogIn();//Abre una ventana en el navegador por defecto del sistema y e intenta autorizarse con Spotify
         playlistsWrapper = new PlaylistsWrapper(spotifyApi);
         userWrapper = new UserWrapper(spotifyApi);
-        controller.setPlaylistsWrapper(playlistsWrapper);
-        controller.setUserWrapper(userWrapper);
         stage.close();
         FXMLLoader appLoader = new FXMLLoader(
                 getClass().getResource(
                         "GUI/App.fxml"
                 )
         );
-        appLoader.setController(controller);
+
         this.stage=new Stage();
-        stage.getIcons().add(new Image(App.class.getResourceAsStream("GUI/Logo.png")));
+        stage.getIcons().add(new Image(App.class.getResourceAsStream("GUI/res/Logo.png")));
         stage.show();
         stage.setTitle("Playlists Sets - "+userWrapper.getName());
         Parent root = appLoader.load();
-
         stage.setScene(new Scene(root));
+        this.controller=appLoader.getController();
+        controller.setUserWrapper(userWrapper);
+        controller.setPlaylistsWrapper(playlistsWrapper);
+        controller.iniciar();
 
     }
 
@@ -69,7 +69,7 @@ public class App extends Application {
         primaryStage.setTitle("PlaylistSets - Login");
         primaryStage.setScene(new Scene(root, 400, 300));
         primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new Image(App.class.getResourceAsStream("GUI/Logo.png")));
+        primaryStage.getIcons().add(new Image(App.class.getResourceAsStream("GUI/res/Logo.png")));
         primaryStage.show();
     }
 
