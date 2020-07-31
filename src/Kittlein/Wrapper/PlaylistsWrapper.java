@@ -3,6 +3,7 @@ package Kittlein.Wrapper;
 import Kittlein.Sets.Cancion;
 import Kittlein.Sets.Playlist;
 import Kittlein.Sets.PlaylistSimple;
+import com.google.gson.JsonArray;
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.special.SnapshotResult;
@@ -91,7 +92,6 @@ public class PlaylistsWrapper {
                     .build();
             offset+=50;
             total-=50;
-
             try {
                 Paging<PlaylistTrack> playlistTrackPaging = getPlaylistsItemsRequest.execute();
                 for (PlaylistTrack i : playlistTrackPaging.getItems()){
@@ -136,12 +136,12 @@ public class PlaylistsWrapper {
     }
 
     private String[][] chunkArray(String[] array) {
-        int numOfChunks = (int)Math.ceil((double)array.length / 50);
+        int numOfChunks = (int)Math.ceil((double)array.length / 100);
         String[][] output = new String[numOfChunks][];
 
         for(int i = 0; i < numOfChunks; ++i) {
-            int start = i * 50;
-            int length = Math.min(array.length - start, 50);
+            int start = i * 100;
+            int length = Math.min(array.length - start, 100);
 
             String[] temp = new String[length];
             System.arraycopy(array, start, temp, 0, length);
@@ -164,12 +164,11 @@ public class PlaylistsWrapper {
 
         for(int i=0;i<urisArray.length;i++) {
             try {
-            System.out.println("i=" + i + ", " + urisArray[i].length + "  canciones");
-            //for (String s : urisArray[i])
-              //  System.out.println("\t    " + s);
-                GetPlaylistRequest getPlaylistRequest = spotifyApi.getPlaylist(spotifyPlaylist.getId()).build();
+                JsonArray jsonArray= new JsonArray();
+                for(int j=0;j<urisArray[i].length;j++)
+                    jsonArray.add(urisArray[i][j]);
+            addItemsToPlaylistRequest = spotifyApi.addItemsToPlaylist(spotifyPlaylist.getId(),jsonArray).build();
 
-            addItemsToPlaylistRequest = spotifyApi.addItemsToPlaylist(spotifyPlaylist.getId(), urisArray[i]).build();
             addItemsToPlaylistRequest.execute();
         } catch (IOException | SpotifyWebApiException| ParseException e) {
                 e.printStackTrace();
