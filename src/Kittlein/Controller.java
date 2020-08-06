@@ -1,21 +1,17 @@
 package Kittlein;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TextField;
 import Kittlein.Sets.*;
 import Kittlein.Wrapper.PlaylistsWrapper;
 import Kittlein.Wrapper.UserWrapper;
-
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
-
 import java.awt.*;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -24,14 +20,8 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Controller {
-
-
-    public Button buttonVerTemas;
-
-    private App app;
     private UserWrapper userWrapper;
     private PlaylistsWrapper playlistsWrapper;
     private List<Playlist> playlists;
@@ -41,8 +31,6 @@ public class Controller {
 
 
     //Variables declaradas en el FXML
-
-   // public Button BottonReload;
    public Button buttonGuardarPlaylist;
     public Button buttonAdd;
     public ListView PList;
@@ -62,11 +50,11 @@ public class Controller {
 
 
     public Controller() {
+        vacia=new ArrayList<>();
+        vacia.add("");
     }
 
     public void iniciar(){
-        vacia=new ArrayList<>();
-        vacia.add("");
         operaciones=new ArrayList<>();
         playlists= new ArrayList<Playlist>();
         List<String> aux =new ArrayList<String>();

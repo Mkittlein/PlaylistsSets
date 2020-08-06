@@ -1,21 +1,20 @@
 package Kittlein;
 
 
-import java.io.IOException;
-import java.net.URI;
-
 import Kittlein.Wrapper.AuthWrapper;
 import Kittlein.Wrapper.PlaylistsWrapper;
 import Kittlein.Wrapper.UserWrapper;
-import com.wrapper.spotify.*;
-
-
+import com.wrapper.spotify.SpotifyApi;
+import com.wrapper.spotify.SpotifyHttpManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URI;
 
 
 public class App extends Application {
@@ -41,23 +40,23 @@ public class App extends Application {
         authWrapper.LogIn();//Abre una ventana en el navegador por defecto del sistema y e intenta autorizarse con Spotify
         playlistsWrapper = new PlaylistsWrapper(spotifyApi);
         userWrapper = new UserWrapper(spotifyApi);
-        stage.close();
         FXMLLoader appLoader = new FXMLLoader(
                 getClass().getResource(
                         "GUI/App.fxml"
                 )
         );
 
-        this.stage=new Stage();
-        stage.getIcons().add(new Image(App.class.getResourceAsStream("GUI/res/Logo.png")));
-        stage.show();
-        stage.setTitle("Playlists Sets - "+userWrapper.getName());
+        //stage.getIcons().add(new Image(App.class.getResourceAsStream("GUI/res/Logo.png")));
+
+
         Parent root = appLoader.load();
-        stage.setScene(new Scene(root));
         this.controller=appLoader.getController();
         controller.setUserWrapper(userWrapper);
         controller.setPlaylistsWrapper(playlistsWrapper);
         controller.iniciar();
+        stage.setTitle("Playlists Sets - "+userWrapper.getName());
+        stage.setScene(new Scene(root,1600,900));
+        stage.setResizable(true);
 
     }
 
