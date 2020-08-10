@@ -1,7 +1,7 @@
-package Kittlein;
-import Kittlein.Sets.*;
-import Kittlein.Wrapper.PlaylistsWrapper;
-import Kittlein.Wrapper.UserWrapper;
+package PlaylistSets;
+import PlaylistSets.Sets.*;
+import PlaylistSets.Wrapper.PlaylistsWrapper;
+import PlaylistSets.Wrapper.UserWrapper;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -28,6 +28,7 @@ public class Controller {
     private List<String> operaciones;
     private Playlist playlistOp;
     private List<String> vacia;
+    private Image defaultImage;
 
 
     //Variables declaradas en el FXML
@@ -52,6 +53,11 @@ public class Controller {
     public Controller() {
         vacia=new ArrayList<>();
         vacia.add("");
+       try {
+           defaultImage = new Image(new FileInputStream(new File("./src/PlaylistSets/GUI/res/Logo.png")));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void iniciar(){
@@ -189,11 +195,7 @@ public class Controller {
         PlaylistName.setText(playlistOp.getName());
         PlaylistSize.setText(Integer.toString(playlistOp.getSize()));
         PlaylistLink.setText("");
-        try {
-            PlaylistImage.setImage(new Image(new FileInputStream(new File("./src/Kittlein/GUI/res/Logo.png"))));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        PlaylistImage.setImage(defaultImage);
         PlaylistTracks.getItems().clear();
         if(playlistOp.getSize()>0)
             PlaylistTracks.getItems().addAll(playlistOp.getCanciones());

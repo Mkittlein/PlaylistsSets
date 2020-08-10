@@ -1,4 +1,4 @@
-package Kittlein.Sets;
+package PlaylistSets.Sets;
 
 import java.util.Set;
 

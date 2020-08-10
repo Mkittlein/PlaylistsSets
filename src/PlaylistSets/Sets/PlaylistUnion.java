@@ -1,6 +1,4 @@
-package Kittlein.Sets;
-
-import Kittlein.Wrapper.PlaylistsWrapper;
+package PlaylistSets.Sets;
 
 import java.util.Set;
 

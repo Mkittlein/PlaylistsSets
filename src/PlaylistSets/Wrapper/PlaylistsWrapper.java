@@ -1,12 +1,11 @@
-package Kittlein.Wrapper;
+package PlaylistSets.Wrapper;
 
-import Kittlein.Sets.Cancion;
-import Kittlein.Sets.Playlist;
-import Kittlein.Sets.PlaylistSimple;
+import PlaylistSets.Sets.Cancion;
+import PlaylistSets.Sets.Playlist;
+import PlaylistSets.Sets.PlaylistSimple;
 import com.google.gson.JsonArray;
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
-import com.wrapper.spotify.model_objects.special.SnapshotResult;
 import com.wrapper.spotify.model_objects.specification.*;
 import com.wrapper.spotify.requests.data.playlists.*;
 import org.apache.hc.core5.http.ParseException;

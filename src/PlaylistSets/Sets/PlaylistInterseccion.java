@@ -1,4 +1,4 @@
-package Kittlein.Sets;
+package PlaylistSets.Sets;
 
 import java.util.Set;
 
@@ -15,13 +15,13 @@ public class PlaylistInterseccion extends PlaylistCompuesta {
         playlist2=null;
     }
 
+    @Override
     public Set<Cancion> getCanciones(){
         Set<Cancion> aux = playlist1.getCanciones();
         if(playlist2!=null)
             aux.retainAll(playlist2.getCanciones());
         return aux;
     }
-
 
     @Override
     public String getName() {

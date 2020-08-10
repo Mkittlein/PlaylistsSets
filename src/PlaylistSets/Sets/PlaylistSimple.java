@@ -1,12 +1,11 @@
-package Kittlein.Sets;
+package PlaylistSets.Sets;
 
-import Kittlein.Wrapper.PlaylistsWrapper;
+import PlaylistSets.Wrapper.PlaylistsWrapper;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 
 
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -25,7 +24,7 @@ public class PlaylistSimple implements Playlist {
     private boolean cached;
     private Set<Cancion> canciones = new HashSet<Cancion>();
     private PlaylistsWrapper playlistsWrapper;
-
+    private Cancion cancion;
 
     public PlaylistSimple(String id, String name, int size, String url, PlaylistsWrapper playlistsWrapper){
         this.id=id;

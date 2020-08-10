@@ -1,9 +1,9 @@
-package Kittlein;
+package PlaylistSets;
 
 
-import Kittlein.Wrapper.AuthWrapper;
-import Kittlein.Wrapper.PlaylistsWrapper;
-import Kittlein.Wrapper.UserWrapper;
+import PlaylistSets.Wrapper.AuthWrapper;
+import PlaylistSets.Wrapper.PlaylistsWrapper;
+import PlaylistSets.Wrapper.UserWrapper;
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.SpotifyHttpManager;
 import javafx.application.Application;
@@ -46,7 +46,7 @@ public class App extends Application {
                 )
         );
 
-        //stage.getIcons().add(new Image(App.class.getResourceAsStream("GUI/res/Logo.png")));
+
 
 
         Parent root = appLoader.load();
@@ -54,8 +54,9 @@ public class App extends Application {
         controller.setUserWrapper(userWrapper);
         controller.setPlaylistsWrapper(playlistsWrapper);
         controller.iniciar();
+        stage.getIcons().add(new Image(App.class.getResourceAsStream("GUI/res/Logo.png")));
         stage.setTitle("Playlists Sets - "+userWrapper.getName());
-        stage.setScene(new Scene(root,1600,900));
+        stage.setScene(new Scene(root));
         stage.setResizable(true);
 
     }
@@ -75,6 +76,6 @@ public class App extends Application {
 
 
     public static void main(String[] args) {
-        launch(args);
+        launch(App.class,args);
     }
 }
