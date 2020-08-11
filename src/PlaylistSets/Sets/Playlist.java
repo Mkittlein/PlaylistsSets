@@ -15,7 +15,7 @@ public interface Playlist {
 
     public abstract int getSize();
 
-    public abstract void addPlaylist(Playlist p);
+    public abstract void addPlaylist(PlaylistSimple p);
 
 
 

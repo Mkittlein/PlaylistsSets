@@ -5,7 +5,7 @@ public abstract class PlaylistCompuesta implements Playlist {
     protected  Playlist playlist2;
 
     @Override
-    public void addPlaylist(Playlist p2){
+    public void addPlaylist(PlaylistSimple p2){
         this.playlist2=p2;
     }
 

@@ -24,7 +24,6 @@ public class PlaylistSimple implements Playlist {
     private boolean cached;
     private Set<Cancion> canciones = new HashSet<Cancion>();
     private PlaylistsWrapper playlistsWrapper;
-    private Cancion cancion;
 
     public PlaylistSimple(String id, String name, int size, String url, PlaylistsWrapper playlistsWrapper){
         this.id=id;
@@ -87,7 +86,9 @@ public class PlaylistSimple implements Playlist {
         return canciones;
     }
 
-    public void addPlaylist(Playlist p){
+    public void addPlaylist(PlaylistSimple p){ //Necesario para poder implementar las operaciones con las playlist mediante la interfaz Playlist sin tener que preguntar la clase del objeto.
+                                        // La idea es que si a una Playlist simple le agregamos una playlistsimple, generamos una copia y "pisamos" el contenido.
+                                        // Esto es necesario solo para la primera playlist que uso en las operaciones, podría mejorarse creando otra clase que implemente playlist que sea solo para esa playlist inicial cuyo contenido no importa o complicando innecesariamente el codigo del controlador.
         this.id=((PlaylistSimple)p).id;
         this.name=((PlaylistSimple)p).name;
         this.size=((PlaylistSimple)p).size;

@@ -30,7 +30,7 @@ public class App extends Application {
 
 
 
-    public void iniciar() throws IOException {
+    public void iniciar() throws IOException { //inicia la App principal, con el App.fxml y el Controller principal
         spotifyApi = new SpotifyApi.Builder()
             .setClientId(clientID)
             .setClientSecret(clientSecret)
@@ -45,10 +45,6 @@ public class App extends Application {
                         "GUI/App.fxml"
                 )
         );
-
-
-
-
         Parent root = appLoader.load();
         this.controller=appLoader.getController();
         controller.setUserWrapper(userWrapper);
@@ -63,7 +59,7 @@ public class App extends Application {
 
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception{ //Genera el dialogo del login
         this.stage=primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("GUI/Login.fxml"));
         primaryStage.setTitle("PlaylistSets - Login");
