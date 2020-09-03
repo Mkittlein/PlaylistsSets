@@ -10,7 +10,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="spotify-web-api" level="project" />
     <orderEntry type="library" name="JavaFX" level="application" />
+    <orderEntry type="library" name="SpotifyWrapper" level="project" />
   </component>
 </module>

@@ -8,19 +8,20 @@
 <AnchorPane prefHeight="300.0" prefWidth="400.0" stylesheets="@Login.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PlaylistSets.LoginController">
 
    <children>
-      <VBox fx:id="LogScreen" fillWidth="true" prefHeight="300.0" prefWidth="400.0" spacing="0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="LogScreen" spacing="0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <TextArea fx:id="LogText" editable="false" prefHeight="250.0" prefWidth="400.0" text="Por favor inicie sesión en spotify para continuar" wrapText="true" />
-            <Button id="LogIn" fx:id="LogIn" defaultButton="true" mnemonicParsing="false" onAction="#LogIn" prefHeight="50.0" prefWidth="400.0" text="Iniciar Sesion" textAlignment="CENTER">
+            <Button id="LogIn" fx:id="LogIn" defaultButton="true" maxHeight="80.0" maxWidth="9000.0" minHeight="80.0" mnemonicParsing="false" onAction="#LogIn" prefHeight="80.0" text="Iniciar Sesion" textAlignment="CENTER" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                <graphic>
-                  <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mouseTransparent="true">
+                  <HBox alignment="CENTER" mouseTransparent="true" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                      <children>
-                        <Pane HBox.hgrow="NEVER" />
-                        <ImageView fitHeight="50" preserveRatio="true">
+                        <Pane maxHeight="72.0" HBox.hgrow="ALWAYS" />
+                        <ImageView fitHeight="72.0" preserveRatio="true" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                            <image>
                               <Image url="@res/SpotifyLogo.png" />
                            </image>
                         </ImageView>
+                        <Pane layoutX="10.0" layoutY="10.0" maxHeight="72.0" maxWidth="10.0" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                </graphic>
